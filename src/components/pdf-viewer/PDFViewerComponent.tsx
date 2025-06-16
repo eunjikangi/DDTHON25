@@ -101,7 +101,7 @@ export default function PDFViewerComponent({
   };
 
   return (
-    <div className="flex flex-col w-full h-full bg-gray-100 rounded-lg border shadow">
+    <div className="flex flex-col w-full h-full bg-white rounded-lg border">
       {/* 상단 컨트롤 바 */}
       <div className="flex items-center justify-between px-4 py-2 bg-white border-b rounded-t-lg">
         <div className="flex items-center gap-2">
@@ -163,10 +163,12 @@ export default function PDFViewerComponent({
           )}
         </div>
       </div>
+
+      
       {/* PDF 뷰어 영역 (세로 스크롤) */}
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto bg-gray-200 flex flex-col items-center px-2 py-4 gap-4"
+        className="flex-1 overflow-y-auto bg-gray-100 flex flex-col items-center px-2 py-4 gap-4"
         style={{ minHeight: 400, maxHeight: 700 }}
       >
         <Document
@@ -195,7 +197,7 @@ export default function PDFViewerComponent({
                 scale={scale}
                 renderTextLayer={true}
                 renderAnnotationLayer={true}
-                className="shadow-lg bg-white rounded"
+                className="shadow-lg bg-white rounded mb-1"
               />
             </div>
           ))}
