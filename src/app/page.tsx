@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PDFUpload } from "@/components/pdf-viewer/PDFUpload";
 import { PDFViewer } from "@/components/pdf-viewer/PDFViewer";
 import { getTranslatedFileName } from "@/lib/utils";
+import { AnimatedCircularProgressBar } from "@/components/magicui/animated-circular-progress-bar";
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -36,6 +37,19 @@ export default function Home() {
     document.body.removeChild(link);
   };
 
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const handleIncrement = (prev: number) => {
+      if (prev === 100) {
+        return 0;
+      }
+      return prev + 10;
+    };
+    setValue(handleIncrement);
+    const interval = setInterval(() => setValue(handleIncrement), 500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <main className="min-h-screen p-8">
@@ -53,7 +67,13 @@ export default function Home() {
           <div className="space-y-4">
             {isTranslating ? (
               <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                <AnimatedCircularProgressBar className="mx-auto"
+                  max={100}
+                  min={0}
+                  value={value}
+                  gaugePrimaryColor="rgb(79 70 229)"
+                  gaugeSecondaryColor="rgba(0, 0, 0, 0.1)"
+                />
                 <p className="mt-4 text-gray-600">Translating your document...</p>
               </div>
             ) : (
